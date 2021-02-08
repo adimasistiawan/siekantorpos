@@ -143,7 +143,7 @@ Barang | Kantor Pos Denpasar
                 </div>
                 <div class="form-group">
                     <label>Stok</label>
-                    <input type="number" min="1"  id="stok" class="form-control" placeholder="Stok" name="stok" required>
+                    <input type="number" min="1"  id="stok" class="form-control" placeholder="Stok" name="stok" disabled>
                 </div>
                 <div class="form-group">
                     <label>Status</label>

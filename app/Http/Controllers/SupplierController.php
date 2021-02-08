@@ -40,6 +40,7 @@ class SupplierController extends Controller
                 'nama' => $request->nama,
                 'alamat' => $request->alamat,
                 'no_telepon' => $request->no_telepon,
+                'status' => "Aktif",
             ]);
             
         }else{
@@ -47,6 +48,7 @@ class SupplierController extends Controller
                 'nama' => $request->nama,
                 'alamat' => $request->alamat,
                 'no_telepon' => $request->no_telepon,
+                'status' => $request->status,
             ]);
         }
         return redirect()->back()->with('success', 'Success');

@@ -186,6 +186,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        @if(Auth::user()->level == "manager")
         <li class="treeview">
           <a href="#">
             <i class="fa fa-cubes"></i> <span>Master</span>
@@ -194,12 +195,14 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li><a href="{{route('kantor.index')}}"><i class="fa fa-circle-o"></i> <span>Kantor</span></a></li>
             <li><a href="{{route('supplier.index')}}"><i class="fa fa-circle-o"></i> <span>Supplier</span></a></li>
             <li><a href="{{route('barang.index')}}"><i class="fa fa-circle-o"></i> <span>Barang</span></a></li>
             <li><a href="{{route('satuan.index')}}"><i class="fa fa-circle-o"></i> <span>Satuan</span></a></li>
           </ul>
         </li>
-        
+        <li><a href="{{route('pengguna.index')}}"><i class="fa fa-users"></i> <span>Pengguna</span></a></li>
+        @endif
         <li><a href="{{route('logout')}}"><i class="fa fa-sign-out text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>

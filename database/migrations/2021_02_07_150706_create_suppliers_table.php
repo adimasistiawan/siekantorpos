@@ -18,6 +18,7 @@ class CreateSuppliersTable extends Migration
             $table->string('nama');
             $table->string('alamat')->nullable();
             $table->string('no_telepon')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }

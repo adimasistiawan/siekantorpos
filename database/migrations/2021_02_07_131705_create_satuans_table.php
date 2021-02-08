@@ -16,6 +16,7 @@ class CreateSatuansTable extends Migration
         Schema::create('satuan', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('status');
             $table->timestamps();
         });
     }

@@ -35,6 +35,7 @@ Satuan | Kantor Pos Denpasar
                         <tr>
                             <th width="15px">No</th>
                             <th class="text-center">Nama</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -46,6 +47,13 @@ Satuan | Kantor Pos Denpasar
                         <tr>
                             <td>{{$no}}</td>
                             <td>{{$item->nama}}</td>
+                            <td class="text-center">
+                              @if ($item->status == "Aktif")
+                                  <span class="badge bg-light-blue">Aktif</span>
+                              @else
+                              <span class="badge bg-red">Tidak Aktif</span>
+                              @endif
+                            </td>
                             <td class="text-center">
                                     <div class="btn btn-warning edit" data-id="{{$item->id}}"  data-toggle="modal">Ubah</div>
                             </td>
@@ -108,6 +116,13 @@ Satuan | Kantor Pos Denpasar
                     <label>Nama</label>
                     <input type="text" class="form-control" id="nama" placeholder="Nama" name="nama" required>
                 </div>
+                <div class="form-group">
+                  <label>Status</label>
+                  <select  id="status" name="status" class="form-control" required>
+                      <option value="Aktif">Aktif</option>
+                      <option value="Tidak Aktif">Tidak Aktif</option>
+                  </select>
+                </div>
               <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Simpan</button>
               </div>
@@ -149,7 +164,7 @@ $(document).ready(function(){
             console.log(response)
             $('#id').val(response.id)
             $('#nama').val(response.nama)
-
+            $('#status').val(response.status)
 
             $('#modal-default2').modal('show');
             $('.loading').attr('hidden',true)

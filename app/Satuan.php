@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Satuan extends Model
 {
     public $table = 'satuan';
-    protected $fillable = ['nama'];
+    protected $fillable = ['nama','status'];
 }

@@ -1,6 +1,6 @@
 @extends('template')
 @section('title')
-Supplier | Kantor Pos Denpasar
+Kantor | Kantor Pos Denpasar
 @endsection
 
 @section('css')
@@ -10,11 +10,11 @@ Supplier | Kantor Pos Denpasar
 <div class="content-wrapper">
     <section class="content-header">
       <h1>
-        Supplier
+        Kantor
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"> Home</a></li>
-        <li class="active">Supplier</li>
+        <li class="active">Kantor</li>
       </ol>
     </section>
 
@@ -23,7 +23,7 @@ Supplier | Kantor Pos Denpasar
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Data Supplier</h3>
+              <h3 class="box-title">Data Kantor</h3>
               <button class="btn btn-primary pull-right"  data-toggle="modal" data-target="#modal-default" >
                 Tambah Data
               </button>
@@ -37,6 +37,7 @@ Supplier | Kantor Pos Denpasar
                             <th class="text-center">Nama</th>
                             <th class="text-center">Alamat</th>
                             <th class="text-center">No Telepon</th>
+                            <th class="text-center">Jenis</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Aksi</th>
                         </tr>
@@ -51,6 +52,7 @@ Supplier | Kantor Pos Denpasar
                             <td>{{$item->nama}}</td>
                             <td>{{$item->alamat}}</td>
                             <td>{{$item->no_telepon}}</td>
+                            <td>{{$item->jenis}}</td>
                             <td class="text-center">
                               @if ($item->status == "Aktif")
                                   <span class="badge bg-light-blue">Aktif</span>
@@ -84,10 +86,10 @@ Supplier | Kantor Pos Denpasar
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title">Tambah Supplier</h4>
+            <h4 class="modal-title">Tambah Kantor</h4>
         </div>
         <div class="modal-body">
-            <form method="post" action="{{route('supplier.store')}}">
+            <form method="post" action="{{route('kantor.store')}}">
                 @csrf
                 <div class="form-group">
                     <label>Nama</label>
@@ -100,6 +102,13 @@ Supplier | Kantor Pos Denpasar
                 <div class="form-group">
                     <label>No Telepon</label>
                     <input type="text" class="form-control" placeholder="No Telepon" name="no_telepon" >
+                </div>
+                <div class="form-group">
+                    <label>Jenis</label>
+                    <select name="jenis" class="form-control" required>
+                        <option value="Kantor Cabang">Kantor Cabang</option>
+                        <option value="Agen">Agen</option>
+                    </select>
                 </div>
               <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Simpan</button>
@@ -118,10 +127,10 @@ Supplier | Kantor Pos Denpasar
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title">Ubah Supplier</h4>
+            <h4 class="modal-title">Ubah Kantor</h4>
         </div>
         <div class="modal-body">
-            <form method="post" action="{{route('supplier.store')}}">
+            <form method="post" action="{{route('kantor.store')}}">
                 @csrf
                 <input type="hidden" name="id" id="id">
                 <div class="form-group">
@@ -135,6 +144,13 @@ Supplier | Kantor Pos Denpasar
                 <div class="form-group">
                     <label>No Telepon</label>
                     <input type="text" id="no_telepon" class="form-control" placeholder="No Telepon" name="no_telepon" >
+                </div>
+                <div class="form-group">
+                    <label>Jenis</label>
+                    <select id="jenis" name="jenis" class="form-control" required>
+                        <option value="Kantor Cabang">Kantor Cabang</option>
+                        <option value="Agen">Agen</option>
+                    </select>
                 </div>
                 <div class="form-group">
                   <label>Status</label>
@@ -172,7 +188,7 @@ $(document).ready(function(){
     $('.edit').click(function(){
         $('.loading').removeAttr('hidden')
         var id = $(this).attr('data-id');
-        url = '{{route('supplier.edit',":id")}}';
+        url = '{{route('kantor.edit',":id")}}';
         url = url.replace(':id', id);
         _token = $('input[name=_token]').val();
         $.ajax({
@@ -186,6 +202,7 @@ $(document).ready(function(){
             $('#nama').val(response.nama)
             $('#alamat').val(response.alamat)
             $('#no_telepon').val(response.no_telepon)
+            $('#jenis').val(response.jenis)
             $('#status').val(response.status)
 
             $('#modal-default2').modal('show');

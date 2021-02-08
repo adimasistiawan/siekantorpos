@@ -38,11 +38,13 @@ class SatuanController extends Controller
         if($request->id == null){
             Satuan::create([
                 'nama' => $request->nama,
+                'status' => "Aktif",
             ]);
             
         }else{
             Satuan::find($request->id)->update([
                 'nama' => $request->nama,
+                'status' => $request->status,
             ]);
         }
         return redirect()->back()->with('success', 'Success');

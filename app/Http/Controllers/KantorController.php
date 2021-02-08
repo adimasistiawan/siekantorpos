@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Barang;
-use App\Satuan;
-class BarangController extends Controller
+use App\Kantor;
+class KantorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +13,8 @@ class BarangController extends Controller
      */
     public function index()
     {
-        $data = Barang::where('status','Aktif')->orderBy('created_at','desc')->with('satuan')->get();
-        $satuan = Satuan::where('status','Aktif')->orderBy('created_at','desc')->get();
-        return view('barang.index',compact('data','satuan'));
+        $data = Kantor::orderBy('created_at','desc')->get();
+        return view('kantor.index',compact('data'));
     }
 
     /**
@@ -26,7 +24,7 @@ class BarangController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -38,17 +36,20 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         if($request->id == null){
-            Barang::create([
+            Kantor::create([
                 'nama' => $request->nama,
-                'satuan_id' => $request->satuan,
-                'stok' => $request->stok,
+                'alamat' => $request->alamat,
+                'no_telepon' => $request->no_telepon,
+                'jenis' => $request->jenis,
                 'status' => "Aktif",
             ]);
             
         }else{
-            Barang::find($request->id)->update([
+            Kantor::find($request->id)->update([
                 'nama' => $request->nama,
-                'satuan_id' => $request->satuan,
+                'alamat' => $request->alamat,
+                'no_telepon' => $request->no_telepon,
+                'jenis' => $request->jenis,
                 'status' => $request->status,
             ]);
         }
@@ -63,7 +64,7 @@ class BarangController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
@@ -74,7 +75,7 @@ class BarangController extends Controller
      */
     public function edit($id)
     {
-        $data = Barang::find($id)->with('satuan')->first();
+        $data = Kantor::find($id);
         return $data;
     }
 
