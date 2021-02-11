@@ -14,7 +14,16 @@
   <link rel="stylesheet" href="{{asset('plugins/jquery-confirm/css/jquery-confirm.css')}}">
   <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
+  <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.min.css')}}">
   <style>
+
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+      line-height: 20px !important;
+    }
+
+    .select2-container .select2-selection--single {
+      margin-top: 3px;
+    }
   .loading {
     position: fixed;
     z-index: 999;
@@ -202,6 +211,9 @@
           </ul>
         </li>
         <li><a href="{{route('pengguna.index')}}"><i class="fa fa-users"></i> <span>Pengguna</span></a></li>
+        <li><a href="{{route('barangmasuk.index')}}"><i class="fa fa-arrow-right"></i> <span>Barang Masuk</span></a></li>
+        <li><a href="{{route('barangkeluar.index')}}"><i class="fa fa-arrow-left"></i> <span>Barang Keluar</span></a></li>
+        <li><a href="{{route('kartu.index')}}"><i class="fa fa-file"></i> <span>Kartu Stok</span></a></li>
         @endif
         <li><a href="{{route('logout')}}"><i class="fa fa-sign-out text-red"></i> <span>Logout</span></a></li>
       </ul>
@@ -231,9 +243,13 @@
 <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>
 <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <script>
   $(function () {
     
+    $('.select2').select2({
+      placeholder: "Pilih",
+    })
     $('#datatable').DataTable({
       'paging'      : true,
       'lengthChange': true,

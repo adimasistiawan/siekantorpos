@@ -15,7 +15,7 @@ class StaffAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->level != "staff_kantor_pusat") {
+        if (Auth::user()->level != "staff_kantor_pusat" && Auth::user()->level != "manager") {
             return redirect()->back();
         }
         return $next($request);

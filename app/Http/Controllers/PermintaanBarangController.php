@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Barang;
-use App\Satuan;
-class BarangController extends Controller
+
+class PermintaanBarangController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +13,7 @@ class BarangController extends Controller
      */
     public function index()
     {
-        $data = Barang::where('status','Aktif')->orderBy('created_at','desc')->with('satuan')->get();
-        $satuan = Satuan::where('status','Aktif')->orderBy('created_at','desc')->get();
-        return view('barang.index',compact('data','satuan'));
+        //
     }
 
     /**
@@ -37,22 +34,7 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->id == null){
-            Barang::create([
-                'nama' => $request->nama,
-                'satuan_id' => $request->satuan,
-                'stok' => $request->stok,
-                'status' => "Aktif",
-            ]);
-            
-        }else{
-            Barang::find($request->id)->update([
-                'nama' => $request->nama,
-                'satuan_id' => $request->satuan,
-                'status' => $request->status,
-            ]);
-        }
-        return redirect()->back()->with('success', 'Success');
+        //
     }
 
     /**
@@ -63,7 +45,7 @@ class BarangController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
@@ -74,8 +56,7 @@ class BarangController extends Controller
      */
     public function edit($id)
     {
-        $data = Barang::where("id",$id)->with('satuan')->first();
-        return $data;
+        //
     }
 
     /**
