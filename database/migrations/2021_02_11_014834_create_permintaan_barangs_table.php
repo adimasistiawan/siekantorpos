@@ -15,12 +15,14 @@ class CreatePermintaanBarangsTable extends Migration
     {
         Schema::create('permintaan_barang', function (Blueprint $table) {
             $table->id();
+            $table->string('kode');
             $table->date('tanggal_diminta');
-            $table->date('tanggal_dipenuhi');
+            $table->date('tanggal_dipenuhi')->nullable();
             $table->integer('kantor_id');
             $table->integer('diminta_oleh');
-            $table->integer('dipenuhi_oleh');
+            $table->integer('dipenuhi_oleh')->nullable();
             $table->string('status');
+            $table->string('alasan_ditolak')->nullable();
             $table->timestamps();
         });
     }

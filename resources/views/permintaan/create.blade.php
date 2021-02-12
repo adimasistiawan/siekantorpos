@@ -1,6 +1,6 @@
 @extends('template')
 @section('title')
-Tambah Barang Keluar | Kantor Pos Denpasar
+Buat Permintaan | Kantor Pos Denpasar
 @endsection
 
 @section('css')
@@ -10,12 +10,12 @@ Tambah Barang Keluar | Kantor Pos Denpasar
 <div class="content-wrapper">
     <section class="content-header">
       <h1>
-        Tambah Barang Keluar
+        Buat Permintaan
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"> Home</a></li>
-        <li >Barang Keluar</li>
-        <li class="active">Tambah Barang Keluar</li>
+        <li >Permintaan Barang</li>
+        <li class="active">Buat Permintaan</li>
       </ol>
     </section>
 
@@ -24,26 +24,17 @@ Tambah Barang Keluar | Kantor Pos Denpasar
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Form Tambah Barang Keluar</h3>
+              <h3 class="box-title">Form Permintaan</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <form action="{{route('barangkeluar.store')}}" method="post">
+                <form action="{{route('permintaanbarang.store')}}" method="post">
                 <div class="col-md-4">
                     @csrf
+                   
                     <div class="form-group">
-                        <label>Tujuan</label>
-                        <select class="form-control select2 input" name="kantor_id" required>
-                            <br>
-                            <option value=""></option>
-                            @foreach ($tujuan as $item)
-                                <option value="{{$item->id}}" >{{$item->nama}}</option>
-                            @endforeach
-                        </select>
-                    </div> 
-                    <div class="form-group">
-                      <label>Keterangan</label>
-                      <input type="text" class="input form-control"  name="keterangan">
+                      <label>Tanggal Diminta</label>
+                      <input type="date" class="input form-control"  name="tanggal_diminta">
                     </div> 
                      
                 </div>
@@ -53,7 +44,6 @@ Tambah Barang Keluar | Kantor Pos Denpasar
                     <thead>
                       
                       <th width="200px">Barang</th>
-                      <th width="200px">Stok</th>
                       <th width="200px">Jumlah</th>
                       <th width="50px"></th>
                     </thead>
@@ -69,13 +59,14 @@ Tambah Barang Keluar | Kantor Pos Denpasar
                                   <option value="{{$item->id}}" >{{$item->nama}} ({{$item->satuan->nama}})</option>
                               @endforeach
                             </select>
+                          
                           </td>
-                          <td>
+                          {{-- <td>
                             <input type="text" class="form-control input-table stok" disabled>
-                          </td>
+                          </td> --}}
                           <td>
                             <input type="text" onkeypress="return isNumberKey(event);" name="jumlah[]" maxlength="10" class="form-control input-mini input-table jumlah" required>
-                            <span class="text-red wrong" hidden>Jumlah tidak boleh melebihi Stok</span>
+                            {{-- <span class="text-red wrong" hidden>Jumlah tidak boleh melebihi Stok</span> --}}
                           </td>
                           <td>
 
@@ -118,6 +109,8 @@ $(document).ready(function(){
     
     @if(session()->has('success'))
          toastr.success("{{session('success')}}")
+   
+         
     @endif
 
     @if(session()->has('error'))
@@ -129,7 +122,6 @@ $(document).ready(function(){
           $(this).val("");
         }
     });
-    
           $('.tambah-item').click(function(){
             $('#tbody').append(`
                   <tr class="tr">
@@ -145,11 +137,7 @@ $(document).ready(function(){
                         
                         </td>
                         <td>
-                            <input type="text" class="form-control input-table stok" disabled>
-                        </td>
-                        <td>
                         <input type="text"  onkeypress="return isNumberKey(event);" maxlength="10" min="1" name="jumlah[]" class="form-control input-table jumlah" required>
-                        <span class="text-red wrong" hidden>Jumlah tidak boleh melebihi Stok</span>
                         </td>
                         <td>
                         <div class="btn btn-danger hapus"><i class="fa fa-trash delete"></i></div>
@@ -165,57 +153,7 @@ $(document).ready(function(){
             $(this).closest('.tr').remove();
           })
 
-          $(document).on('change', '.barang', function() {
-            
-            var row = $(this).closest('.tr');
-            stok = $(row).find('.stok');
-            jumlah = $(row).find('.jumlah');
-            wrong = $(row).find('.wrong');
-            $('.loading').removeAttr('hidden')
-            var id = $(this).val();
-            url = '{{route('barang.edit',":id")}}';
-            url = url.replace(':id', id);
-            _token = $('input[name=_token]').val();
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: url,
-            })
-            .done(function(response) {
-                console.log(response)
-                $(stok).val(response.stok)
-                if($(jumlah).val() > parseInt($(stok).val())){
-                  $(wrong).removeAttr('hidden');
-                  $('.simpan').prop('disabled', true);
-                }else{
-                  $(wrong).attr('hidden',true);
-                  $('.simpan').prop('disabled', false);
-                }
-            })
-            .fail(function(){
-                $.alert("error");
-                return;
-            })
-            .always(function() {
-                $('.loading').attr('hidden',true)
-                console.log("complete");
-            });
-          })
           
-
-          $(document).on('keyup', '.jumlah', function() {
-            var row = $(this).closest('.tr');
-            stok = $(row).find('.stok');
-            wrong = $(row).find('.wrong');
-            if($(this).val() > parseInt($(stok).val())){
-              $(wrong).removeAttr('hidden');
-              $('.simpan').prop('disabled', true);
-            }
-            else{
-              $(wrong).attr('hidden',true);
-              $('.simpan').prop('disabled', false);
-            }
-          })
     
  })
 </script>

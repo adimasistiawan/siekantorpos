@@ -210,11 +210,14 @@
             <li><a href="{{route('satuan.index')}}"><i class="fa fa-circle-o"></i> <span>Satuan</span></a></li>
           </ul>
         </li>
+        @endif
+        @if(Auth::user()->level == "manager" || Auth::user()->level == "staff_kantor_pusat")
         <li><a href="{{route('pengguna.index')}}"><i class="fa fa-users"></i> <span>Pengguna</span></a></li>
         <li><a href="{{route('barangmasuk.index')}}"><i class="fa fa-arrow-right"></i> <span>Barang Masuk</span></a></li>
         <li><a href="{{route('barangkeluar.index')}}"><i class="fa fa-arrow-left"></i> <span>Barang Keluar</span></a></li>
         <li><a href="{{route('kartu.index')}}"><i class="fa fa-file"></i> <span>Kartu Stok</span></a></li>
         @endif
+        <li><a href="{{route('permintaanbarang.index')}}"><i class="fa fa-truck"></i> <span>Permintaan Barang</span></a></li>
         <li><a href="{{route('logout')}}"><i class="fa fa-sign-out text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>

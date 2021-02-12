@@ -1,6 +1,6 @@
 @extends('template')
 @section('title')
-Tambah Barang Masuk | Kantor Pos Denpasar
+Ubah Data Permintaan | Kantor Pos Denpasar
 @endsection
 
 @section('css')
@@ -10,12 +10,12 @@ Tambah Barang Masuk | Kantor Pos Denpasar
 <div class="content-wrapper">
     <section class="content-header">
       <h1>
-        Tambah Barang Masuk
+        Ubah Data Permintaan
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"> Home</a></li>
-        <li >Barang Masuk</li>
-        <li class="active">Tambah Barang Masuk</li>
+        <li >Permintaan Barang</li>
+        <li class="active">Ubah Data Permintaan</li>
       </ol>
     </section>
 
@@ -24,26 +24,17 @@ Tambah Barang Masuk | Kantor Pos Denpasar
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Form Tambah Barang Masuk</h3>
+              <h3 class="box-title">Form Ubah Permintaan</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <form action="{{route('barangmasuk.store')}}" method="post">
+                <form action="{{route('permintaanbarang.update',$permintaan->id)}}" method="post">
                 <div class="col-md-4">
                     @csrf
+                   @method('PUT')
                     <div class="form-group">
-                        <label>Supplier</label>
-                        <select class="form-control select2 input" name="supplier_id" required>
-                            <br>
-                            <option value=""></option>
-                            @foreach ($supplier as $item)
-                                <option value="{{$item->id}}" >{{$item->nama}}</option>
-                            @endforeach
-                        </select>
-                    </div> 
-                    <div class="form-group">
-                      <label>Keterangan</label>
-                      <input type="text" class="input form-control"  name="keterangan">
+                      <label>Tanggal Diminta</label>
+                      <input type="date" class="input form-control" value="{{$permintaan->tanggal_diminta}}"  name="tanggal_diminta">
                     </div> 
                      
                 </div>
@@ -57,30 +48,39 @@ Tambah Barang Masuk | Kantor Pos Denpasar
                       <th width="50px"></th>
                     </thead>
                     <tbody id="tbody">
-                      
+                        @php
+                            $no = 0;
+                        @endphp
+                        @foreach($permintaandetail as $val)
                         <tr class="tr">
                           
-                          <td>
-                            <select class="form-control select2 input-table barang" name="barang_id[]" style="width: 100%"  required>
-                              <br>
-                              <option value=""></option>
-                              @foreach ($barang as $item)
-                                  <option value="{{$item->id}}" >{{$item->nama}} ({{$item->satuan->nama}})</option>
-                              @endforeach
-                            </select>
-                          
-                          </td>
-                          {{-- <td>
-                            <input type="text" class="form-control input-table stok" disabled>
-                          </td> --}}
-                          <td>
-                            <input type="text" onkeypress="return isNumberKey(event);" name="jumlah[]" maxlength="10" class="form-control input-mini input-table jumlah" required>
-                            {{-- <span class="text-red wrong" hidden>Jumlah tidak boleh melebihi Stok</span> --}}
-                          </td>
-                          <td>
-
-                          </td>
+                            <td>
+                              <select class="form-control select2 input-table barang" name="barang_id[]" style="width: 100%"  required>
+                                
+                                @foreach ($barang as $item)
+                                    <option value="{{$item->id}}" @if($val->barang_id == $item->id) selected @endif>{{$item->nama}} ({{$item->satuan->nama}})</option>
+                                @endforeach
+                              </select>
+                            
+                            </td>
+                            {{-- <td>
+                              <input type="text" class="form-control input-table stok" disabled>
+                            </td> --}}
+                            <td>
+                              <input type="text" onkeypress="return isNumberKey(event);" value="{{$val->jumlah_diminta}}" name="jumlah[]" maxlength="10" class="form-control input-mini input-table jumlah" required>
+                              {{-- <span class="text-red wrong" hidden>Jumlah tidak boleh melebihi Stok</span> --}}
+                            </td>
+                            <td>
+                                @if ($no > 0)
+                                <div class="btn btn-danger hapus"><i class="fa fa-trash delete"></i></div>
+                                @endif
+                                @php
+                                    $no++;
+                                @endphp
+                            </td>
                         </tr>
+                        @endforeach
+                        
                     </tbody>
                     <tfoot>
                       <tr>
@@ -162,50 +162,7 @@ $(document).ready(function(){
             $(this).closest('.tr').remove();
           })
 
-          // $(document).on('change', '.barang', function() {
-            
-          //   var row = $(this).closest('.tr');
-          //   stok = $(row).find('.stok');
-            
-          //   $('.loading').removeAttr('hidden')
-          //   var id = $(this).val();
-          //   url = '{{route('barang.edit',":id")}}';
-          //   url = url.replace(':id', id);
-          //   _token = $('input[name=_token]').val();
-          //   $.ajax({
-          //       type: 'GET',
-          //       dataType: 'json',
-          //       url: url,
-          //   })
-          //   .done(function(response) {
-          //       console.log(response)
-          //       $(stok).val(response.stok)
-                
-          //   })
-          //   .fail(function(){
-          //       $.alert("error");
-          //       return;
-          //   })
-          //   .always(function() {
-          //       $('.loading').attr('hidden',true)
-          //       console.log("complete");
-          //   });
-          // })
           
-
-          // $(document).on('keyup', '.jumlah', function() {
-          //   var row = $(this).closest('.tr');
-          //   stok = $(row).find('.stok');
-          //   wrong = $(row).find('.wrong');
-          //   if($(this).val() > parseInt($(stok).val())){
-          //     $(wrong).removeAttr('hidden');
-          //     $('.simpan').prop('disabled', true);
-          //   }
-          //   else{
-          //     $(wrong).attr('hidden',true);
-          //     $('.simpan').prop('disabled', false);
-          //   }
-          // })
     
  })
 </script>

@@ -93,7 +93,7 @@ class BarangMasukController extends Controller
     public function show($id)
     {
         $barangmasuk = BarangMasuk::where('id',$id)->with('supplier')->with('user')->first();
-        $detail = BarangMasukDetail::where('id',$barangmasuk->id)->with('barang')->get();
+        $detail = BarangMasukDetail::where('barangmasuk_id',$id)->with('barang')->get();
         return view('barangmasuk.show',compact('barangmasuk','detail'));
     }
 

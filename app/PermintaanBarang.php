@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PermintaanBarang extends Model
 {
-    protected $table= 'permintaan_barang_detail';
-    protected $fillable= ['id','tanggal_diminta','tanggal_dipenuhi','kantor_id','diminta_oleh','dipenuhi_oleh','status'];
+    protected $table= 'permintaan_barang';
+    protected $fillable= ['id','kode','tanggal_diminta','tanggal_dipenuhi','kantor_id','diminta_oleh','dipenuhi_oleh','status','alasan_ditolak'];
     
     public function kantor()
     {
