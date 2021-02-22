@@ -1,6 +1,6 @@
 @extends('template')
 @section('title')
-Lihat Data Permintaan | Kantor Pos Denpasar
+Kirim Barang | Kantor Pos Denpasar
 @endsection
 
 @section('css')
@@ -10,12 +10,12 @@ Lihat Data Permintaan | Kantor Pos Denpasar
 <div class="content-wrapper">
     <section class="content-header">
       <h1>
-        Lihat Data Permintaan
+        Kirim Barang
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"> Home</a></li>
         <li >Data Permintaan</li>
-        <li class="active">Lihat Data Permintaan</li>
+        <li class="active">Kirim Barang</li>
       </ol>
     </section>
 
@@ -67,7 +67,7 @@ Lihat Data Permintaan | Kantor Pos Denpasar
                             <td>
                                 @if($permintaan->status == "Belum Dikonfirmasi")
                                 <span class="badge bg-yellow">{{$permintaan->status}}</span>
-                                @elseif($permintaan->status == "Telah Dikirim")
+                                @elseif($permintaan->status == "Dikirim")
                                 <span class="badge bg-light-blue">{{$permintaan->status}}</span>
                                 @elseif($permintaan->status == "Telah Diterima")
                                 <span class="badge bg-green">{{$permintaan->status}}</span>
@@ -86,17 +86,18 @@ Lihat Data Permintaan | Kantor Pos Denpasar
                     </table>
                 </div>
                 <div class="col-md-12" style="margin-top:50px;">
-                  <table class="table table-bordered" style="width: 60%">
+                  <table class="table table-bordered" style="width: 80%">
                     <thead>
                       <th width="50px">No</th>
-                      <th width="300px">Barang</th>
-                      <th width="200px">Satuan</th>
-                      <th width="200px">Jumlah Diminta</th>
-                      @if($permintaan->status == "Telah Dikirim")
+                      <th width="250px">Barang</th>
+                      <th width="100px">Satuan</th>
+                      <th width="130px">Jumlah Diminta</th>
+                      <th width="100px">Stok Tersedia</th>
                       <th width="200px">Jumlah Dikirim</th>
-                      @endif
                     </thead>
                     <tbody id="tbody">
+                        <form action="{{route('permintaanbarang.dikirim',$permintaan->id)}}" method="post">
+                            @csrf
                       <?php $no = 1?>
                       @foreach($permintaandetail as $value)
                           <tr class="tr">
@@ -112,11 +113,16 @@ Lihat Data Permintaan | Kantor Pos Denpasar
                               <td class="text-right">
                                   {{$value->jumlah_diminta}}
                               </td>
-                              @if($permintaan->status == "Telah Dikirim")
                               <td class="text-right">
-                                {{$value->jumlah_dipenuhi}}
+                                {{$value->barang->stok}}
+                                <input type="hidden" class="stok" value="{{$value->barang->stok}}">
                               </td>
-                              @endif
+                              <td>
+                                
+                                <input type="hidden" class="id input-value" name="id[]" value="{{$value->id}}">
+                                <input type="text" onkeypress="return isNumberKey(event);" class="jmldikirim form-control input-mini input-value" name="jumlah_dipenuhi[]" required>
+                                <span class="text-red wrong" hidden>Jumlah Dikirim tidak boleh melebihi Stok Tersedia</span>
+                              </td>
                           </tr>
                           <?php $no++?>
                       @endforeach
@@ -124,17 +130,11 @@ Lihat Data Permintaan | Kantor Pos Denpasar
                   </table>
                 </div>
             </div>
-            @if((Auth::user()->level == "staff_kantor_pusat" || Auth::user()->level == "manager") && $permintaan->status == "Belum Dikonfirmasi")
+            @if(Auth::user()->level != "staff_kantor_cabang")
             <div class="box-footer">
-              <a href="{{route('permintaanbarang.kirim',$permintaan->id)}}"class="btn btn-success btn-approve" >Kirim</a>
-              <button class="btn btn-danger btn-reject" >Tolak</button>
               
-            </div>
-            @endif
-            @if((Auth::user()->level == "staff_kantor_cabang" || Auth::user()->level == "agen") && $permintaan->status == "Ditolak")
-            <div class="box-footer">
-              <a href="{{route('permintaanbarang.edit',$permintaan->id)}}"class="btn btn-warning btn-approve" >Ubah</a>
-              
+              <button class="btn btn-primary simpan" onclick="this.form.target='_self';return confirm('Apakah kamu yakin ingin mengirim barang ini?')" type="submit" >Kirim</button>
+              </form>
             </div>
             @endif
           </div>
@@ -152,67 +152,32 @@ Lihat Data Permintaan | Kantor Pos Denpasar
 
 @section('js')
 <script>
+     function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        return !(charCode > 31 && (charCode < 48 || charCode > 57));
+    }
     $(document).ready(function(){
-      $('.btn-reject').click(function(){
-            $.confirm({
-              theme: 'material',
-              title: 'Isi Alasan',
-              content: '' +
-                                            '<form action="" class="formName">' +
-                                            '<div class="form-group">' +
-                                            '<input class="form-control alasan" placeholder="Masukan Alasan" required>' +
-                                            '</div>' +
-                                            '</form>',
-              buttons: {
-                Yes: {
-                  text:'Submit',
-                  btnClass: 'btn-primary',
-                  action: function(){
-                  var checkrequired = $('input').filter('[required]:visible')
-                  var isValid = true;
-                  $(checkrequired).each( function() {
-                          if ($(this).parsley().validate() !== true) isValid = false;
-                  });
-                  if(!isValid){
-                    $.alert('Mohon masukan alasan');
-                    return false;
-                  }
-                  else{
-                    urlsnya = '{{route('permintaanbarang.tolak',$permintaan->id)}}';
-                    var alasan = this.$content.find('.alasan').val();
-                    _token = $('input[name=_token]').val();
-                    $.ajax({
-                      type: 'POST',
-                      dataType: 'json',
-                      data: {_token:_token, status:'Ditolak',alasan:alasan},
-                      url: urlsnya,
-                    })
-                    .done(function(response) {
-                      if(response == 1){
-                        toastr.success("Success")
-                        url = "{{ route('permintaanbarang.index')}}";
-                        window.location.replace(url);
-                      }
-                      
-                    })
-                    .fail(function(){
-                      $.alert("error");
-                      return;
-                    })
-                    .always(function() {
-                        console.log("complete");
-                    });
-                   }
-                  }
-                  
-                },
-                
-                No: function () {
-                  return;
-                }
-              }
-            })
-            
+        
+
+        $(document).on('keyup', '.jmldikirim', function() {
+            var row = $(this).closest('.tr');
+            stok = $(row).find('.stok');
+            wrong = $(row).find('.wrong');
+            if($(this).val() > parseInt($(stok).val())){
+              $(wrong).removeAttr('hidden');
+              $('.simpan').prop('disabled', true);
+            }
+            else{
+              $(wrong).attr('hidden',true);
+              $('.simpan').prop('disabled', false);
+            }
+            var hidden = $('#tbody').find('.wrong')
+            $(hidden).each( function() {
+                    if ($(this).is(":visible")){
+                      $('.simpan').prop('disabled', true);
+                      return false;
+                    }
+            });
           })
     })
 </script>

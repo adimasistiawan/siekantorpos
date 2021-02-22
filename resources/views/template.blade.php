@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{{asset('plugins/jquery-confirm/css/jquery-confirm.css')}}">
   <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/parsley-js/parsley.css')}}">
   <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.min.css')}}">
   <style>
 
@@ -210,9 +211,10 @@
             <li><a href="{{route('satuan.index')}}"><i class="fa fa-circle-o"></i> <span>Satuan</span></a></li>
           </ul>
         </li>
+        <li><a href="{{route('pengguna.index')}}"><i class="fa fa-users"></i> <span>Pengguna</span></a></li>
         @endif
         @if(Auth::user()->level == "manager" || Auth::user()->level == "staff_kantor_pusat")
-        <li><a href="{{route('pengguna.index')}}"><i class="fa fa-users"></i> <span>Pengguna</span></a></li>
+        
         <li><a href="{{route('barangmasuk.index')}}"><i class="fa fa-arrow-right"></i> <span>Barang Masuk</span></a></li>
         <li><a href="{{route('barangkeluar.index')}}"><i class="fa fa-arrow-left"></i> <span>Barang Keluar</span></a></li>
         <li><a href="{{route('kartu.index')}}"><i class="fa fa-file"></i> <span>Kartu Stok</span></a></li>
@@ -242,6 +244,7 @@
 <script src="{{asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
+<script src="{{asset('plugins/parsley-js/parsley.js')}}"></script>
 <script src="{{asset('plugins/jquery-confirm/js/jquery-confirm.js')}}"></script>
 <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>
@@ -264,10 +267,10 @@
 
     $('#datatable2').DataTable({
       'paging'      : true,
-      'lengthChange': true,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : false,
+      'info'        : false,
       'autoWidth'   : true
     })
   })

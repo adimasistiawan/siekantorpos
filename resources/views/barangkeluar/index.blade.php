@@ -49,7 +49,7 @@ Barang Keluar | Kantor Pos Denpasar
                         <tr>
                             <td>{{$no}}</td>
                             <td>{{$item->kode}}</td>
-                            <td>{{$item->kantor->nama}}</td>
+                            <td>{{$item->kantor_id == 0 ? "Pemakaian Internal":$item->kantor->nama}}</td>
                             <td>{{date('d-m-Y', strtotime($item->tanggal))}}</td>
                             <td>{{$item->user->nama}}</td>
                             

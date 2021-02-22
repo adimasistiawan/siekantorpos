@@ -36,6 +36,7 @@ Tambah Barang Keluar | Kantor Pos Denpasar
                         <select class="form-control select2 input" name="kantor_id" required>
                             <br>
                             <option value=""></option>
+                            <option value="0">Pemakaian Internal</option>
                             @foreach ($tujuan as $item)
                                 <option value="{{$item->id}}" >{{$item->nama}}</option>
                             @endforeach
@@ -214,7 +215,16 @@ $(document).ready(function(){
             else{
               $(wrong).attr('hidden',true);
               $('.simpan').prop('disabled', false);
+              
             }
+
+            var hidden = $('#tbody').find('.wrong')
+            $(hidden).each( function() {
+                    if ($(this).is(":visible")){
+                      $('.simpan').prop('disabled', true);
+                      return false;
+                    }
+            });
           })
     
  })

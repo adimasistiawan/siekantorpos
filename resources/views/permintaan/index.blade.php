@@ -24,7 +24,7 @@ Permintaan Barang | Kantor Pos Denpasar
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Data Permintaan Barang</h3>
-              @if(Auth::user()->level == "staff_kantor_cabang")
+              @if(Auth::user()->level == "staff_kantor_cabang" || Auth::user()->level == "agen")
               <a href="{{route('permintaanbarang.create')}}" class="btn btn-primary pull-right" >
                 Buat Permintaan
               </a>
@@ -58,7 +58,7 @@ Permintaan Barang | Kantor Pos Denpasar
                             <td class="text-center">
                                 @if($item->status == "Belum Dikonfirmasi")
                                 <span class="badge bg-yellow">{{$item->status}}</span>
-                                @elseif($item->status == "Dikirim")
+                                @elseif($item->status == "Telah Dikirim")
                                 <span class="badge bg-light-blue">{{$item->status}}</span>
                                 @elseif($item->status == "Telah Diterima")
                                 <span class="badge bg-green">{{$item->status}}</span>
@@ -67,9 +67,9 @@ Permintaan Barang | Kantor Pos Denpasar
                                 @endif
                             </td>
                             <td class="text-center">
-                                @if(Auth::user()->level == "staff_kantor_cabang")
+                                @if(Auth::user()->level == "staff_kantor_cabang" || Auth::user()->level == "agen")
                                 
-                                    @if($item->status == "Belum Dikonfirmasi")
+                                    @if($item->status == "Belum Dikonfirmasi" || $item->status == "Ditolak")
                                     <a class="btn btn-warning" href="{{route('permintaanbarang.edit',$item->id)}}">Ubah</a>
                                     <a class="btn btn-primary" href="{{route('permintaanbarang.show',$item->id)}}">Lihat</a>
                                     @else

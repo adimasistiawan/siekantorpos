@@ -33,7 +33,7 @@ Lihat Barang Keluar | Kantor Pos Denpasar
                         <tr>
                             <th style="width: 100px">Tujuan</th>
                             <td  style="width: 10px"> : </td>
-                            <td>{{$barangkeluar->kantor->nama}}</td>
+                            <td>{{$barangkeluar->kantor_id == 0 ? "Pemakaian Internal":$barangkeluar->kantor->nama}}</td>
                         </tr>
                       
                         <tr>

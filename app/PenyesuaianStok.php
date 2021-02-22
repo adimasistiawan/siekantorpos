@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class KartuStok extends Model
+class PenyesuaianStok extends Model
 {
-    protected $table= 'kartu_stok';
-    protected $fillable= ['id','barang_id', 'tanggal','stok_awal','masuk','keluar','penyesuaian','sisa'];
+    protected $table= 'penyesuaian_stok';
+    protected $fillable= ['id','barang_id', 'stok_sistem','stok_aktual','selisih'];
     public function barang()
     {
         return $this->belongsTo('App\Barang','barang_id','id');    

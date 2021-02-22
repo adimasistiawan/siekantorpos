@@ -24,6 +24,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin/kartu-stok', 'KartustokController@index')->name('kartu.index');
         Route::post('/admin/kartu-stok', 'KartustokController@search')->name('kartu.search');
         Route::get('/admin/kartu-stok/{id}/{dari}/{sampai}/pdf', 'KartustokController@pdf')->name('kartu.pdf');
+        Route::get('/admin/permintaanbarang/kirim/{id}','PermintaanBarangController@kirim')->name('permintaanbarang.kirim');
     });
     Route::resource('/admin/permintaanbarang', 'PermintaanBarangController');
+    Route::post('/admin/permintaanbarang/tolak/{id}','PermintaanBarangController@tolak')->name('permintaanbarang.tolak');
+    
+    Route::post('/admin/permintaanbarang/dikirim/{id}','PermintaanBarangController@dikirim')->name('permintaanbarang.dikirim');
 });
