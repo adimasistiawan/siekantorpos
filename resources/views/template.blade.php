@@ -217,6 +217,7 @@
         
         <li><a href="{{route('barangmasuk.index')}}"><i class="fa fa-arrow-right"></i> <span>Barang Masuk</span></a></li>
         <li><a href="{{route('barangkeluar.index')}}"><i class="fa fa-arrow-left"></i> <span>Barang Keluar</span></a></li>
+        <li><a href="{{route('penyesuaianstok.index')}}"><i class="fa fa-edit"></i> <span>Penyesuaian Stok</span></a></li>
         <li><a href="{{route('kartu.index')}}"><i class="fa fa-file"></i> <span>Kartu Stok</span></a></li>
         @endif
         <li><a href="{{route('permintaanbarang.index')}}"><i class="fa fa-truck"></i> <span>Permintaan Barang</span></a></li>

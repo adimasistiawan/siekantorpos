@@ -16,6 +16,7 @@ class CreatePenyesuaianStoksTable extends Migration
         Schema::create('penyesuaian_stok', function (Blueprint $table) {
             $table->id();
             $table->integer('barang_id');
+            $table->integer('user_id');
             $table->integer('stok_sistem');
             $table->integer('stok_aktual');
             $table->integer('selisih');

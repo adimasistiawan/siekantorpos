@@ -90,10 +90,11 @@
       <table  class="table"style="width: 80%; border:1px solid #000000;">
         <tr class="tr">
           <td class="th" width="50px" style="text-align: center; font-family: 'CustomFontBold';">No</td>
-          <td class="th" width="200px" style="text-align: center; font-family: 'CustomFontBold';">Tanggal</td>
+          <td class="th" width="100px" style="text-align: center; font-family: 'CustomFontBold';">Tanggal</td>
           <td class="th" width="100px" style="text-align: center; font-family: 'CustomFontBold';">Stok Awal</td>
           <td class="th" width="100px" style="text-align: center; font-family: 'CustomFontBold';">Masuk</td>
           <td class="th" width="100px" style="text-align: center; font-family: 'CustomFontBold';">Keluar</td>
+          <td class="th" width="100px" style="text-align: center; font-family: 'CustomFontBold';">Penyesuaian</td>
           <td class="th" style="text-align: center; font-family: 'CustomFontBold';" width="100px">Sisa Stok</td>
         </tr>
           <?php $no = 1?>
@@ -114,6 +115,9 @@
                   </td>
                   <td class="td" style="text-align: right;">
                       {{$value->keluar}}
+                  </td>
+                  <td class="td" style="text-align: right;">
+                    {{$value->penyesuaian}}
                   </td>
                   <td class="td" style="text-align: right;">
                       {{$value->sisa}}

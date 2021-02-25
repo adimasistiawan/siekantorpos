@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'staff'], function() {
         Route::resource('/admin/barangmasuk', 'BarangMasukController');
         Route::resource('/admin/barangkeluar', 'BarangKeluarController');
+        Route::resource('/admin/penyesuaianstok', 'PenyesuaianStokController');
         Route::get('/admin/kartu-stok', 'KartustokController@index')->name('kartu.index');
         Route::post('/admin/kartu-stok', 'KartustokController@search')->name('kartu.search');
         Route::get('/admin/kartu-stok/{id}/{dari}/{sampai}/pdf', 'KartustokController@pdf')->name('kartu.pdf');

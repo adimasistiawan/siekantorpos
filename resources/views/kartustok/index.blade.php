@@ -82,6 +82,7 @@ Kartu Stok | Kantor Pos Denpasar
                                   <th class="text-center" style="width:120px">Stok Awal</th>
                                   <th class="text-center" style="width:120px">Masuk</th>
                                   <th class="text-center" style="width:120px">Keluar</th>
+                                  <th class="text-center" style="width:120px">Penyesuaian</th>
                                   <th class="text-center" style="width:120px">Sisa Stok</th>
                                 </tr>
                             </thead>
@@ -162,6 +163,7 @@ $(document).ready(function(){
                   <td class="text-right">`+value['stok_awal']+`</td>
                   <td class="text-right">`+value['masuk']+`</td>
                   <td  class="text-right">`+value['keluar']+`</td>
+                  <td  class="text-right">`+value['penyesuaian']+`</td>
                   <td  class="text-right">`+value['sisa']+`</td>
               </tr>
               `)
